@@ -11,7 +11,7 @@ module lab1_main();
 
 	// TODO:: Try to connect the module into our test bench
 	//?? adder_gl(c3_gl, s_gl, a, b, c0);
-	
+	rca_gl adder_gl(c3_gl, s_gl, a, b, c0);
 
 	// track the maximum delays
 	integer delay, max_delay=0, time_max;
@@ -19,8 +19,10 @@ module lab1_main();
 		delay = $time%100;
 		if(delay>max_delay) begin
 			max_delay = delay;
-			// if i-->j, time_max = {i, j, 1}
-			// if j-->i, time_max = {i, j, 0}
+			// if (i-->j)
+			// 	time_max = {i, j, 1};//
+			// if (j-->i)
+			// 	time_max = {i, j, 0};//
 			time_max = $time/100;
 		end
 	end
@@ -34,17 +36,15 @@ module lab1_main();
 		$dumpvars(0, lab1_main);
 		
 		// print a line if the listed variables change value
-		// $display("   time    a     b   c0  {c3 s}   gl");
-		// $monitor("%7d / %b / %b / %b / %b%b / %b%b",
-		//  	 $time, a, b, c0, c3, s, c3_gl, s_gl);
+		// $display("   time    a     b   c0  {c3 s}   gl");//
+		// $monitor("%7d / %b / %b / %b / %b%b / %b%b", $time, a, b, c0, c3, s, c3_gl, s_gl);//
 		
 		// loop through all possible transitions
 		{a, b, c0} <= 0;
 		for(i=0; i<128; i=i+1) begin
 			for(j=0; j<128; j=j+1) begin
-				// $display("======================================");
-				// $display("%7d / %b / %b / %b / %b%b / %b%b",
-				//   	 $time, a, b, c0, c3, s, c3_gl, s_gl);
+				// $display("======================================");//
+				// $display("%7d / %b / %b / %b / %b%b / %b%b", $time, a, b, c0, c3, s, c3_gl, s_gl);//
 				{a, b, c0} <= i;
 				#100;
 				{a, b, c0} <= j;
